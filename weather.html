@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html ng-app="myApp">
+<head>
+
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+
+<style type="text/css">
+	.top{
+		width: 100%;
+		text-align: center;
+		align :center;
+	}
+	.mid{
+		width: 40%;
+		height: 60%;
+		position:absolute;
+		left: 30%;
+		top: 10%;
+		text-align: center;
+		background-color: #ddd;
+	}
+	.table{
+		width: 100%;
+		height: 100%;
+		font-weight: bold;
+	}
+</style>
+
+</head>
+
+<body ng-controller="myCtrl">
+    <div class="top">
+        <form class="navbar-form navbar-center" role="search">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Cityname">
+            </div>
+            <button type="submit" class="btn btn-default">Send</button>
+            <a href="weather.html">
+                <button type="button" class="btn btn-default">refresh</button>
+            </a>
+        </form>
+    </div>
+    
+    <div class="mid"><table class="table">
+        <tr><td colspan="2">{{detail.city}}</td></tr>
+        <tr><td colspan="2">{{detail.date}}</td></tr>
+        <tr>
+            <td>day</td>
+            <td>night</td>
+        </tr>
+        <tr>
+            <td>{{detail.day_condition}}</td>
+            <td>{{detail.night_condition}}</td>
+        </tr>
+        <tr>
+        	<td>{{detail.day_wind}}</td>
+        	<td>{{detail.night_wind}}</td>
+        </tr>
+        <tr>
+        	<td>{{detail.day_temperature}}</td>
+        	<td>{{detail.night_temperature}}</td>
+        </tr>
+    </table></div>
+</body>
+</html>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $http) {
+  $http.get("http://api.1-blog.com/biz/bizserver/weather/list.do?city=成都").success(function (response) {
+      $scope. detail= response['detail'][0];
+  });
+});
+</script>
